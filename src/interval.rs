@@ -20,7 +20,7 @@ impl Interval {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub struct Cents(NotNan<f64>);
+pub struct Cents(pub NotNan<f64>);
 
 impl Cents {
     pub fn abs(self) -> Cents {
