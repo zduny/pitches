@@ -100,7 +100,7 @@ impl Ord for Note {
 
 impl Display for Note {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}{}{}", self.letter, self.octave, self.accidental)
+        write!(f, "{}{}{}", self.letter, self.accidental, self.octave)
     }
 }
 
