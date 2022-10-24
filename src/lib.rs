@@ -1,3 +1,6 @@
+//! Structured representation of musical pitches, notes and intervals
+//! for for equal-tempered scale, A₄ = 440 Hz.
+
 mod interval;
 mod note;
 
@@ -7,7 +10,10 @@ pub use note::*;
 use lazy_static::lazy_static;
 use std::fmt::Display;
 
-const FREQUENCIES: [f64; 108] = [
+/// Frequencies of pitches for equal-tempered scale, A₄ = 440 Hz.
+///
+/// See [table](https://pages.mtu.edu/~suits/notefreqs.html).
+pub const FREQUENCIES: [f64; 108] = [
     16.35, 17.32, 18.35, 19.45, 20.60, 21.83, 23.12, 24.50, 25.96, 27.50, 29.14, 30.87, 32.70,
     34.65, 36.71, 38.89, 41.20, 43.65, 46.25, 49.00, 51.91, 55.00, 58.27, 61.74, 65.41, 69.30,
     73.42, 77.78, 82.41, 87.31, 92.50, 98.00, 103.83, 110.00, 116.54, 123.47, 130.81, 138.59,
@@ -21,30 +27,51 @@ const FREQUENCIES: [f64; 108] = [
 ];
 
 lazy_static! {
+    /// All available pitches of equal-tempered scale, A₄ = 440 Hz.
     pub static ref PITCHES: Vec<Pitch> = (0..FREQUENCIES.len())
         .into_iter()
         .map(|index| Pitch { index: index as u8 })
         .collect();
 }
 
+/// Struct representing pitch.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Pitch {
     index: u8,
 }
 
 impl Pitch {
+    /// Frequency of pitch.
     pub fn frequency(&self) -> f64 {
         FREQUENCIES[self.index as usize]
     }
 
+    /// Get index in [FREQUENCIES] array.
     pub fn index(&self) -> u8 {
         self.index
     }
 
+    /// Get 'number' of pitch.
+    ///
+    ///| Number | Note  |
+    ///|--------|-------|
+    ///| 0      | C     |
+    ///| 1      | C♯/D♭ |
+    ///| 2      | D     |
+    ///| 3      | D♯/E♭ |
+    ///| 4      | E     |
+    ///| 5      | F     |
+    ///| 6      | F♯/G♭ |
+    ///| 7      | G     |
+    ///| 8      | G♯/A♭ |
+    ///| 9      | A     |
+    ///| 10     | A♯/B♭ |
+    ///| 11     | B     |
     pub fn number(&self) -> u8 {
         self.index % 12
     }
 
+    /// Octave of the pitch.
     pub fn octave(&self) -> Octave {
         (self.index / 12).try_into().unwrap()
     }

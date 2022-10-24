@@ -1,11 +1,17 @@
+//! Note representation.
+
 use std::fmt::Display;
 
 use crate::{Pitch, PITCHES};
 
+/// Error that can occur during note creation.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Error {
+    /// Incorrect note letter.
     IncorrectLetter,
+    /// Incorrect note accidental.
     IncorrectAccidental,
+    /// Octave is not in supported range.
     OctaveNotInRange,
 }
 
@@ -19,6 +25,7 @@ impl Display for Error {
     }
 }
 
+/// Struct representing musical note.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Note {
     letter: Letter,
@@ -27,6 +34,7 @@ pub struct Note {
 }
 
 impl Note {
+    /// Create new note.
     pub fn new(letter: Letter, octave: Octave, accidental: Accidental) -> Result<Self, Error> {
         match accidental {
             Accidental::None => Ok(Note {
@@ -53,18 +61,24 @@ impl Note {
         }
     }
 
+    /// Get note letter.
     pub fn letter(&self) -> Letter {
         self.letter
     }
 
+    /// Get note octave.
     pub fn octave(&self) -> Octave {
         self.octave
     }
 
+    /// Get note accidental (sharp - ♯ or flat - ♭).
     pub fn accidental(&self) -> Accidental {
         self.accidental
     }
 
+    /// Get note with the same pitch but different accidental (or exactly the same note if there isn't one).
+    ///
+    /// For example: for C♯ - D♭ is returned.
     pub fn enharmonic(self) -> Note {
         match self.accidental {
             Accidental::None => self,
@@ -154,6 +168,7 @@ impl From<Note> for Pitch {
     }
 }
 
+/// Musical note letter.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Letter {
     C,
@@ -166,6 +181,7 @@ pub enum Letter {
 }
 
 impl Letter {
+    /// Get previous note letter.
     pub fn previous(&self) -> Letter {
         match self {
             Letter::C => Letter::B,
@@ -178,6 +194,7 @@ impl Letter {
         }
     }
 
+    /// Get next note letter.
     pub fn next(&self) -> Letter {
         match self {
             Letter::C => Letter::D,
@@ -223,6 +240,7 @@ impl TryFrom<char> for Letter {
     }
 }
 
+/// Supported octaves.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Octave {
     First,
@@ -292,10 +310,14 @@ impl From<Octave> for u8 {
     }
 }
 
+/// Musical note accidental.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Accidental {
+    /// No accidental.
     None,
+    /// Flat - ♭.
     Flat,
+    /// Sharp - ♯.
     Sharp,
 }
 
