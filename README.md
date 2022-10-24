@@ -1,4 +1,4 @@
-# pitch
+# pitches
 Structured representation of musical pitches, notes and intervals
 for for equal-tempered scale, A₄ = 440 Hz.
 
