@@ -14,7 +14,7 @@ impl Interval {
     /// Create new interval between frequencies.
     ///
     /// Frequencies must be non-zero, otherwise may panic.
-    /// 
+    ///
     /// Positive when `frequency_0` < `frequency_1`.<br>
     /// Negative when `frequency_0` > `frequency_1`.
     pub fn new(frequency_0: f64, frequency_1: f64) -> Self {
