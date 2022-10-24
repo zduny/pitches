@@ -1,12 +1,12 @@
 [package]
-name = "pitch"
+name = "pitches"
 version = "0.1.0"
 authors = ["zduny <dzduniak@gmail.com>"]
 edition = "2021"
 description = "Structured representation of musical pitches, notes and intervals."
 license = "Apache-2.0"
-repository = "https://github.com/zduny/pitch"
-documentation = "https://docs.rs/pitch/"
+repository = "https://github.com/zduny/pitches"
+documentation = "https://docs.rs/pitches/"
 keywords = ["music", "pitch", "note"]
 
 [dependencies]
